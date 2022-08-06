@@ -42,7 +42,7 @@ app.get("/players", (req, res) => {
 });
 
 app.get("/stadiums", (req, res) => {
-  // let hasMore = false;
+  let hasMore = false;
   let { page, limit } = req.query;
   if (!page) page = 1;
   if (!limit) limit = 10;
@@ -56,10 +56,10 @@ app.get("/stadiums", (req, res) => {
       if (err) {
         res.status(400).json({ message: "Some Error Occurred", error: err });
       } else {
-        // if (results.rows.length % limit === 0) hasMore = true;
+        if (results.rows.length % limit === 0) hasMore = true;
         res.status(200).json({
           message: "success",
-          // hasMore: hasMore,
+          hasMore: hasMore,
           stadiums: results.rows,
         });
       }
