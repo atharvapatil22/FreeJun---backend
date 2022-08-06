@@ -16,6 +16,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/players", (req, res) => {
+  let hasMore = false;
   let { page, limit } = req.query;
   if (!page) page = 1;
   if (!limit) limit = 10;
@@ -29,7 +30,12 @@ app.get("/players", (req, res) => {
       if (err) {
         res.status(400).json({ message: "Some Error Occurred", error: err });
       } else {
-        res.status(200).json({ message: "success", players: results.rows });
+        if (results.rows.length % limit === 0) hasMore = true;
+        res.status(200).json({
+          message: "success",
+          hasMore: hasMore,
+          players: results.rows,
+        });
       }
     }
   );
