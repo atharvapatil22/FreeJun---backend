@@ -50,7 +50,7 @@ app.get("/stadiums", (req, res) => {
   const offset = page * limit - limit;
 
   pool.query(
-    "Select * from football_stadiums LIMIT $1 OFFSET $2;",
+    "Select * from football_stadiums order by id LIMIT $1 OFFSET $2;",
     [limit, offset],
     (err, results) => {
       if (err) {
